@@ -14,12 +14,10 @@ export class CalculatorFrameComponent implements OnInit {
   operator: string;
   result: number;
   operatorAdded: boolean = false;
-
   inputOne: number[] = [];
   firstInput: number;
   secondInput: number;
   inputTwo: number[] = [];
-
   shownInput: string;
 
   constructor(
@@ -49,10 +47,9 @@ export class CalculatorFrameComponent implements OnInit {
     this.inputTwo.join('');
     this.secondInput = this.mergeFullInput(this.inputTwo);
     this.result = this.calculatorService.computateInputs(+this.firstInput, +this.secondInput, this.operator);
-    console.log(this.result);
-    this.displayCurrentInputsOrComputation(this.result);
 
     this.clearInputs();
+    this.takeNumber(this.result);
   }
 
   private displayCurrentInputsOrComputation(inputToDisplay: any) {
