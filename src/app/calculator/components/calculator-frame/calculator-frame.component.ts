@@ -11,10 +11,8 @@ export class CalculatorFrameComponent implements OnInit {
   numbers: number[] = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
   operators: string[] = ['/', 'x', '-', '+'];
 
-  inputList: number[] = [];
   operator: string;
   result: number;
-  numberPlaceholder: string[] = [];
   operatorAdded: boolean = false;
 
   inputOne: number[] = [];
@@ -22,7 +20,6 @@ export class CalculatorFrameComponent implements OnInit {
   secondInput: number;
   inputTwo: number[] = [];
 
-  shownInputList: any[] = [];
   shownInput: string;
 
   constructor(
@@ -35,11 +32,11 @@ export class CalculatorFrameComponent implements OnInit {
   takeNumber(number: number) {
     if (!this.operatorAdded) {
       this.inputOne.push(number);
-      this.shownInput = `${this.inputOne.join('')}`;
+      this.displayCurrentInputsOrComputation(this.inputOne.join(''));
     } else {
-      this.firstInput = +this.inputOne.join('');
+      this.firstInput = this.mergeFullInput(this.inputOne);
       this.inputTwo.push(number)
-      this.shownInput = `${this.inputTwo.join('')}`;
+      this.displayCurrentInputsOrComputation(this.inputTwo.join(''));
     }
   }
 
@@ -50,10 +47,23 @@ export class CalculatorFrameComponent implements OnInit {
 
   computate() {
     this.inputTwo.join('');
-    this.secondInput = +this.inputTwo.join('');
+    this.secondInput = this.mergeFullInput(this.inputTwo);
     this.result = this.calculatorService.computateInputs(+this.firstInput, +this.secondInput, this.operator);
     console.log(this.result);
-    this.shownInput = `${this.result}`;
+    this.displayCurrentInputsOrComputation(this.result);
+
+    this.clearInputs();
+  }
+
+  private displayCurrentInputsOrComputation(inputToDisplay: any) {
+    this.shownInput = `${inputToDisplay}`;
+  }
+
+  private mergeFullInput(input: any[]) {
+    return +input.join('');
+  }
+
+  private clearInputs() {
     this.inputOne = [];
     this.inputTwo = [];
     this.operatorAdded = false;
