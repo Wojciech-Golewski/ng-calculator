@@ -19,7 +19,11 @@ export class CalculatorFrameComponent implements OnInit {
 
   inputOne: number[] = [];
   firstInput: number;
+  secondInput: number;
   inputTwo: number[] = [];
+
+  shownInputList: any[] = [];
+  shownInput: string;
 
   constructor(
     private calculatorService: CalculatorService
@@ -29,11 +33,13 @@ export class CalculatorFrameComponent implements OnInit {
   }
 
   takeNumber(number: number) {
-    if (this.operatorAdded) {
+    if (!this.operatorAdded) {
+      this.inputOne.push(number);
+      this.shownInput = `${this.inputOne.join('')}`;
+    } else {
       this.firstInput = +this.inputOne.join('');
       this.inputTwo.push(number)
-    } else {
-      this.inputOne.push(number);
+      this.shownInput = `${this.inputTwo.join('')}`;
     }
   }
 
@@ -44,8 +50,13 @@ export class CalculatorFrameComponent implements OnInit {
 
   computate() {
     this.inputTwo.join('');
-    this.result = this.calculatorService.computateInputs(+this.firstInput, +this.inputTwo, this.operator);
+    this.secondInput = +this.inputTwo.join('');
+    this.result = this.calculatorService.computateInputs(+this.firstInput, +this.secondInput, this.operator);
     console.log(this.result);
+    this.shownInput = `${this.result}`;
+    this.inputOne = [];
+    this.inputTwo = [];
+    this.operatorAdded = false;
   }
 
 }
