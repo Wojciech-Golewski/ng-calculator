@@ -13,62 +13,66 @@ export class CalculatorFrameComponent implements OnInit {
 
   operator: string;
   result: number;
-  operatorAdded: boolean = false;
-  inputOne: number[] = [];
-  firstInput: number;
-  secondInput: number;
-  inputTwo: number[] = [];
-  shownInput: string;
+  isOperatorAdded: boolean = false;
+
+  inputOneArray: number[] = [];
+  inputOne: number;
+  inputTwoArray: number[] = [];
+  inputTwo: number;
+  
+  displayInput: string;
 
   constructor(
     private calculatorService: CalculatorService
   ) { }
 
   ngOnInit() {
-    this.displayCurrentInputsOrComputation();
+    this.displayCurrentInputsOrResultOrDefault();
   }
 
+  // can only calculate two numbers now
   takeNumber(number: number) {
-    if (!this.operatorAdded) {
-      this.inputOne.push(number);
-      this.displayCurrentInputsOrComputation(this.inputOne.join(''));
+    if (!this.isOperatorAdded) {
+      this.inputOneArray.push(number);
+      this.displayCurrentInputsOrResultOrDefault(this.inputOneArray.join(''));
     } else {
-      this.firstInput = this.mergeFullInput(this.inputOne);
-      this.inputTwo.push(number)
-      this.displayCurrentInputsOrComputation(this.inputTwo.join(''));
+      this.inputOne = this.mergeInputToOneNumber(this.inputOneArray);
+      this.inputTwoArray.push(number)
+      this.displayCurrentInputsOrResultOrDefault(this.inputTwoArray.join(''));
     }
   }
 
   takeOperator(operator: string) {
     this.operator = operator;
-    this.operatorAdded = true;
+    this.isOperatorAdded = true;
   }
 
   computate() {
-    this.inputTwo.join('');
-    this.secondInput = this.mergeFullInput(this.inputTwo);
-    this.result = this.calculatorService.computateInputs(+this.firstInput, +this.secondInput, this.operator);
+    this.inputTwoArray.join('');
+    this.inputTwo = this.mergeInputToOneNumber(this.inputTwoArray);
+    this.result = this.calculatorService
+      .computateInputs(+this.inputOne, +this.inputTwo, this.operator);
 
     this.clearAll();
     this.takeNumber(this.result);
   }
 
   clearAll() {
-    this.inputOne = [];
-    this.inputTwo = [];
-    this.operatorAdded = false;
-    this.displayCurrentInputsOrComputation();
+    this.inputOneArray = [];
+    this.inputTwoArray = [];
+    this.isOperatorAdded = false;
+    this.displayCurrentInputsOrResultOrDefault();
   }
 
-  private displayCurrentInputsOrComputation(inputToDisplay?: any) {
+  private displayCurrentInputsOrResultOrDefault(inputToDisplay?: any) {
     if (inputToDisplay) {
-      this.shownInput = `${inputToDisplay}`;
+      this.displayInput = `${inputToDisplay}`;
     } else {
-      this.shownInput = `0`;
+      this.displayInput = `0`;
     }
   }
 
-  private mergeFullInput(input: any[]) {
+  private mergeInputToOneNumber(input: any[]) {
     return +input.join('');
   }
 
