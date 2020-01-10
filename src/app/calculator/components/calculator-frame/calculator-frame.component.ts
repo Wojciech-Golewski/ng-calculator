@@ -13,13 +13,13 @@ export class CalculatorFrameComponent implements OnInit {
 
   operator: string;
   result: number;
-  isOperatorAdded: boolean = false;
+  isOperatorAdded = false;
 
   inputOneArray: number[] = [];
   inputOne: number;
   inputTwoArray: number[] = [];
   inputTwo: number;
-  
+
   displayInput: string;
 
   constructor(
@@ -31,13 +31,13 @@ export class CalculatorFrameComponent implements OnInit {
   }
 
   // can only calculate two numbers now
-  takeNumber(number: number) {
+  takeNumber(inputNumber: number) {
     if (!this.isOperatorAdded) {
-      this.inputOneArray.push(number);
+      this.inputOneArray.push(inputNumber);
       this.displayCurrentInputsOrResultOrDefault(this.inputOneArray.join(''));
     } else {
       this.inputOne = this.mergeInputToOneNumber(this.inputOneArray);
-      this.inputTwoArray.push(number)
+      this.inputTwoArray.push(inputNumber);
       this.displayCurrentInputsOrResultOrDefault(this.inputTwoArray.join(''));
     }
   }

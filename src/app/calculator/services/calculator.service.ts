@@ -8,7 +8,7 @@ export class CalculatorService {
   constructor() { }
 
   computateInputs(inputOne: number, inputTwo: number, operator: string) {
-    switch(operator) {
+    switch (operator) {
       case '/':
         return inputOne / inputTwo;
       case 'x':
