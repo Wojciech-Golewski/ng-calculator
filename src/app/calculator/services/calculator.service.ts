@@ -7,16 +7,21 @@ export class CalculatorService {
 
   constructor() { }
 
-  checkOperator(operator: string): string {
+  computateInputs(inputOne: number, inputTwo: number, operator: string) {
+
+    console.log(inputOne);
+    console.log(inputTwo);
+    console.log(operator);
+
     switch(operator) {
       case '/':
-        return '/';
+        return inputOne / inputTwo;
       case 'x':
-        return '*';
+        return inputOne * inputTwo;
       case '-':
-        return '-';
+        return inputOne - inputTwo;
       case '+':
-        return '+';
+        return inputOne + inputTwo;
     }
   }
 
