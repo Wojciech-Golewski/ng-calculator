@@ -25,6 +25,7 @@ export class CalculatorFrameComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.displayCurrentInputsOrComputation();
   }
 
   takeNumber(number: number) {
@@ -48,22 +49,27 @@ export class CalculatorFrameComponent implements OnInit {
     this.secondInput = this.mergeFullInput(this.inputTwo);
     this.result = this.calculatorService.computateInputs(+this.firstInput, +this.secondInput, this.operator);
 
-    this.clearInputs();
+    this.clearAll();
     this.takeNumber(this.result);
   }
 
-  private displayCurrentInputsOrComputation(inputToDisplay: any) {
-    this.shownInput = `${inputToDisplay}`;
+  clearAll() {
+    this.inputOne = [];
+    this.inputTwo = [];
+    this.operatorAdded = false;
+    this.displayCurrentInputsOrComputation();
+  }
+
+  private displayCurrentInputsOrComputation(inputToDisplay?: any) {
+    if (inputToDisplay) {
+      this.shownInput = `${inputToDisplay}`;
+    } else {
+      this.shownInput = `0`;
+    }
   }
 
   private mergeFullInput(input: any[]) {
     return +input.join('');
-  }
-
-  private clearInputs() {
-    this.inputOne = [];
-    this.inputTwo = [];
-    this.operatorAdded = false;
   }
 
 }
