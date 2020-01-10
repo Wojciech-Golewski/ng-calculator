@@ -8,11 +8,6 @@ export class CalculatorService {
   constructor() { }
 
   computateInputs(inputOne: number, inputTwo: number, operator: string) {
-
-    console.log(inputOne);
-    console.log(inputTwo);
-    console.log(operator);
-
     switch(operator) {
       case '/':
         return inputOne / inputTwo;
