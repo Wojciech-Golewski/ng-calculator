@@ -1,10 +1,33 @@
 <div class="main-container">
     <div class="calculator-container">
-        <div class="result-container">
-
+        <div class="result-container flex-center">
+            <span>0</span>
         </div>
         <div class="calculator-functions-container">
-            
+            <div class="numbers-container">
+                <div
+                    *ngFor="let number of numbers"
+                    class="flex-center item-container"
+                    (click)="takeNumber(number)"
+                >
+                    {{number}}
+                </div>
+                <div
+                    class="equals-container flex-center item-container"
+                    (click)="computate()"
+                >
+                    =
+                </div>
+            </div>
+            <div class="functions-container">
+                <div
+                    *ngFor="let operator of operatorList"
+                    class="flex-center item-container"
+                    (click)="takeOperator(operator)"
+                >
+                    {{operator}}
+                </div>
+            </div>
         </div>
     </div>
 </div>
